@@ -1,0 +1,4 @@
+/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/build/CMakeFiles/main.dir
+/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/build/CMakeFiles/image_proc.dir
+/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/build/CMakeFiles/edit_cache.dir
+/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/build/CMakeFiles/rebuild_cache.dir
