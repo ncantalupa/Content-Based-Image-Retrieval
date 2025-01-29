@@ -10,9 +10,9 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Add the main executable
-add_executable(main main.cpp csv_util/csv_util.cpp)
+add_executable(main main.cpp csv_util/csv_util.cpp functions.cpp)
 target_link_libraries(main ${OpenCV_LIBS})
 
 # Add an executable for filters_test.cpp
-add_executable(image_proc image_proc.cpp csv_util/csv_util.cpp)
+add_executable(image_proc image_proc.cpp csv_util/csv_util.cpp functions.cpp)
 target_link_libraries(image_proc ${OpenCV_LIBS})
