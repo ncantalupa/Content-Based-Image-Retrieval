@@ -3,7 +3,7 @@
 #include "csv_util/csv_util.h"
 
 
-int features_7x7(cv::Mat &src, std::vector<float> features) {
+int features_7x7(cv::Mat &src, std::vector<float> &features) {
     int rows_center = src.rows / 2;
     int cols_center = src.cols / 2;
 
@@ -16,12 +16,10 @@ int features_7x7(cv::Mat &src, std::vector<float> features) {
     for(int i = rows_start; i < rows_end; i++) {
         for(int j = cols_start; j < cols_end; j++) {
             for (int k = 0; k < 3; k++) {
-                std::cout << src.at<cv::Vec3b>(i, j)[k] << " ";
-                features.emplace_back(src.at<cv::Vec3b>(i, j)[k]);
+                features.push_back((int)src.at<cv::Vec3b>(i, j)[k]);
             }
         }
     }
-
     return 0;
 }
 
@@ -30,20 +28,24 @@ int main(int argc, char* argv[]) {
         std::cout << "Usage: " << argv[0] << " <csv file>" << std::endl;
         return -1;
     }
-    
-    cv::Mat src = cv::imread("../sources/test_subset/pic.0001.jpg");
-    std::vector<float> features;
+    for (int idx = 1; idx <= 1107; ++idx) {
+        std::stringstream ss;
+        ss << "../sources/olympus/pic."
+           << std::setw(4) << std::setfill('0') << idx
+           << ".jpg";
+        std::string filename = ss.str();
 
-    if(src.empty()) {
-        std::cout << "Unable to open image" << std::endl;
-        return -1;
+        cv::Mat src = cv::imread(filename);
+        if (src.empty()) {
+            std::cerr << "Unable to open image: " << filename << std::endl;
+            continue;
+        }
+
+        std::vector<float> features;
+        features_7x7(src, features);
+
+        append_image_data_csv(argv[1], (char*)filename.c_str(), features, 0);
     }
-
-    features_7x7(src, features);
-    for (int i = 0; i < features.size(); i++) {
-        std::cout << features[i] << " ";
-    }
-
 
     return 0;
 }
