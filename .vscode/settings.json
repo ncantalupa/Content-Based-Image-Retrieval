@@ -44,6 +44,10 @@
         "exception": "cpp",
         "memory_resource": "cpp",
         "type_traits": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "iostream": "cpp",
+        "span": "cpp",
+        "deque": "cpp",
+        "list": "cpp"
     }
 }
