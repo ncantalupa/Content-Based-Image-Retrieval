@@ -28,6 +28,9 @@ int main(int argc, char* argv[]) {
     // Print the top N matches filenames
     for(int i = 0; i < N; i++) {
         std::cout << topN[i] << std::endl;
+        cv::Mat t = cv::imread(topN[i]);
+        cv::imshow("Match " + std::to_string(i), t);
+        cv::waitKey(0);
     }
     
     return 0;
