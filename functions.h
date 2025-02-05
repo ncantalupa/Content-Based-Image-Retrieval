@@ -7,8 +7,7 @@
 #include "csv_util/csv_util.h"
 
 // Function declarations
-int cosine_similarity_topN(std::vector<float> &features, std::vector<std::vector<float>> &data, std::vector<char *> filenames, int N, std::vector<char *> &topN);
-
+int get_src(const char* fp, cv::Mat& src);
 
 // Function declarations
 // Retrieve functions given cl arguments

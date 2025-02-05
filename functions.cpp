@@ -35,7 +35,8 @@ int features_7x7(char* fp, std::vector<float>& features)
 }
 
 int features_DNN(char* fp, std::vector<float>& features) {
-    char* resnet_features = "ResNet18_olym.csv";
+    char* resnet_features = new char[strlen("ResNet18_olym.csv") + 1];
+    strcpy(resnet_features, "../features/ResNet18_olym.csv");
     std::vector<char *> filenames;
     std::vector<std::vector<float>> data;
     read_image_data_csv(resnet_features, filenames, data, 0);
@@ -280,7 +281,7 @@ int texture_and_color(char* fp, std::vector<float>& features)
     std::vector<float> texture_features;
     std::vector<float> color_features;
     histogram_texture(src, texture_features);
-    histogram_hs(src, color_features);
+    histogram_hs(fp, color_features);
 
     // Append histogram features to the output features vector
     features.insert(features.end(), texture_features.begin(), texture_features.end());
@@ -453,7 +454,7 @@ int get_distance_function(const char* function_name,
             {"hist_intersection", histogram_intersection},
             {"multihistogram_diff", multihistogram_difference},
             {"texture_color_diff", texture_and_color_difference}, 
-            ("cosine_similarity", cosine_similarity)
+            {"cosine", cosine_similarity}
         };
     if (const auto iterator = processing_functions.find(function_name); iterator != processing_functions.end())
     {
