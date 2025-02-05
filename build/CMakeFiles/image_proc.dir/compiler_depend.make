@@ -1914,6 +1914,7 @@ CMakeFiles/image_proc.dir/functions.cpp.o: /Users/ncantalupa/Desktop/Github/Cont
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/set \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/sstream \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stack \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stdbool.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stdexcept \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stdint.h \
@@ -2093,9 +2094,11 @@ CMakeFiles/image_proc.dir/functions.cpp.o: /Users/ncantalupa/Desktop/Github/Cont
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/mm_malloc.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/mmintrin.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdarg.h \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdbool.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdint.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/xmmintrin.h \
+  /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/DA2Network.hpp \
   /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/csv_util/csv_util.h \
   /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/functions.h \
   /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/imgproc/segmentation.hpp \
@@ -2207,7 +2210,11 @@ CMakeFiles/image_proc.dir/functions.cpp.o: /Users/ncantalupa/Desktop/Github/Cont
   /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/video.hpp \
   /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/video/background_segm.hpp \
   /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/video/tracking.hpp \
-  /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/videoio.hpp
+  /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/videoio.hpp \
+  /usr/local/include/onnxruntime/onnxruntime_c_api.h \
+  /usr/local/include/onnxruntime/onnxruntime_cxx_api.h \
+  /usr/local/include/onnxruntime/onnxruntime_cxx_inline.h \
+  /usr/local/include/onnxruntime/onnxruntime_float16.h
 
 CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/image_proc.cpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/Availability.h \
@@ -3019,6 +3026,7 @@ CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Con
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/set \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/sstream \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stack \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stdbool.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stdexcept \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stdint.h \
@@ -3198,9 +3206,11 @@ CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Con
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/mm_malloc.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/mmintrin.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdarg.h \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdbool.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdint.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/xmmintrin.h \
+  /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/DA2Network.hpp \
   /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/csv_util/csv_util.h \
   /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/functions.h \
   /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/imgproc/segmentation.hpp \
@@ -3312,10 +3322,18 @@ CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Con
   /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/video.hpp \
   /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/video/background_segm.hpp \
   /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/video/tracking.hpp \
-  /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/videoio.hpp
+  /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/videoio.hpp \
+  /usr/local/include/onnxruntime/onnxruntime_c_api.h \
+  /usr/local/include/onnxruntime/onnxruntime_cxx_api.h \
+  /usr/local/include/onnxruntime/onnxruntime_cxx_inline.h \
+  /usr/local/include/onnxruntime/onnxruntime_float16.h
 
 
 /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/image_proc.cpp:
+
+/usr/local/include/onnxruntime/onnxruntime_cxx_inline.h:
+
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdbool.h:
 
 /Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/functions.cpp:
 
@@ -3412,6 +3430,8 @@ CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Con
 /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/core/base.hpp:
 
 /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/core/async.hpp:
+
+/usr/local/include/onnxruntime/onnxruntime_float16.h:
 
 /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/core.hpp:
 
@@ -3812,6 +3832,8 @@ CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Con
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__assert:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__type_traits/is_scalar.h:
+
+/usr/local/include/onnxruntime/onnxruntime_c_api.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__type_traits/is_reference_wrapper.h:
 
@@ -4829,6 +4851,8 @@ CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Con
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__exception/terminate.h:
 
+/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/DA2Network.hpp:
+
 /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/flann/config.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stddef.h:
@@ -5341,6 +5365,8 @@ CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Con
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__algorithm/is_sorted_until.h:
 
+/usr/local/include/onnxruntime/onnxruntime_cxx_api.h:
+
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__algorithm/ranges_nth_element.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__iterator/advance.h:
@@ -5352,6 +5378,8 @@ CMakeFiles/image_proc.dir/image_proc.cpp.o: /Users/ncantalupa/Desktop/Github/Con
 /usr/local/Cellar/opencv/4.11.0/include/opencv4/opencv2/stitching/detail/matchers.hpp:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__utility/swap.h:
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/stdbool.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1/__algorithm/max_element.h:
 

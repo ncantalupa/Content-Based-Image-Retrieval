@@ -4,7 +4,7 @@
 # compile CXX with /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /usr/local/Cellar/opencv/4.11.0/include/opencv4
+CXX_INCLUDES = -I/usr/local/include/onnxruntime -isystem /usr/local/Cellar/opencv/4.11.0/include/opencv4 -isystem /usr/local/include/eigen3
 
 CXX_FLAGS = -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
 

@@ -48,6 +48,9 @@
         "iostream": "cpp",
         "span": "cpp",
         "deque": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "iomanip": "cpp",
+        "chrono": "cpp",
+        "functional": "cpp"
     }
 }
