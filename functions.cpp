@@ -53,6 +53,38 @@ int features_DNN(char* fp, std::vector<float>& features) {
     return 0;
 }
 
+int features_can(char* fp, std::vector<float>& features)
+{
+    cv::Mat src;
+    get_src(fp, src);
+    cv::Mat depth = cv::Mat::zeros(src.size(), CV_8UC3);
+    cv::Mat dst = cv::Mat::zeros(src.size(), CV_8UC3);
+
+    DA2Network da_net("model_fp16.onnx");
+    da_net.set_input(src);
+    da_net.run_network(depth, src.size());
+    
+    for (int i = 0; i < src.rows; i++){
+        for (int j = 0; j < src.cols; j++){
+            if (depth.at<unsigned char>(i, j) > 100 ) {
+	            dst.at<cv::Vec3b>(i,j) = src.at<cv::Vec3b>(i, j);
+	        }else{
+                dst.at<cv::Vec3b>(i,j) = 0;
+            }
+        }
+    }
+    // cv::imshow("src", src);
+    // cv::imshow("depth", depth);
+    // cv::imshow("dst", dst);
+    // cv::waitKey(0);
+
+    char* out_fp = new char[strlen("DA2.jpg") + 1];
+    strcpy(out_fp, "DA2.jpg");
+    cv::imwrite(out_fp, dst);
+    histogram_hs(out_fp, features);
+    return 0;
+}
+
 int histogram_hs(char* fp, std::vector<float>& features)
 {
     cv::Mat src;
@@ -429,7 +461,8 @@ int get_feature_function(const char* function_name, std::function<int(char*, std
         {"histogram", histogram_hs},
         {"multihistogram", multihistogram_hs},
         {"texture_color", texture_and_color}, 
-        {"ResNet", features_DNN}
+        {"ResNet", features_DNN}, 
+        {"cans", features_can}
     };
     if (const auto iterator = processing_functions.find(function_name); iterator != processing_functions.end())
     {
