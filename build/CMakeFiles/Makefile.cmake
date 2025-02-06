@@ -11,6 +11,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.31.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.31.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.31.3/CMakeSystem.cmake"
+  "/usr/local/lib/cmake/onnxruntime/onnxruntimeConfig.cmake"
+  "/usr/local/lib/cmake/onnxruntime/onnxruntimeConfigVersion.cmake"
+  "/usr/local/lib/cmake/onnxruntime/onnxruntimeTargets-release.cmake"
+  "/usr/local/lib/cmake/onnxruntime/onnxruntimeTargets.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVConfig-version.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVConfig.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVModules-release.cmake"
@@ -47,6 +51,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/local/share/cmake/Modules/Platform/Linker/Apple-AppleClang-CXX.cmake"
   "/usr/local/share/cmake/Modules/Platform/Linker/Apple-AppleClang.cmake"
   "/usr/local/share/cmake/Modules/Platform/UnixPaths.cmake"
+  "/usr/local/share/eigen3/cmake/Eigen3Config.cmake"
+  "/usr/local/share/eigen3/cmake/Eigen3ConfigVersion.cmake"
+  "/usr/local/share/eigen3/cmake/Eigen3Targets.cmake"
   )
 
 # The corresponding makefile is:

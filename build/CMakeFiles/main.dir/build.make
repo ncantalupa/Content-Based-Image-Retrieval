@@ -163,6 +163,7 @@ main: /usr/local/lib/libopencv_wechat_qrcode.4.11.0.dylib
 main: /usr/local/lib/libopencv_xfeatures2d.4.11.0.dylib
 main: /usr/local/lib/libopencv_xobjdetect.4.11.0.dylib
 main: /usr/local/lib/libopencv_xphoto.4.11.0.dylib
+main: /usr/local/lib/libonnxruntime.dylib
 main: /usr/local/lib/libopencv_shape.4.11.0.dylib
 main: /usr/local/lib/libopencv_highgui.4.11.0.dylib
 main: /usr/local/lib/libopencv_datasets.4.11.0.dylib

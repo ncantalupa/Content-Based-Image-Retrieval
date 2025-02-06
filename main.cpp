@@ -1,7 +1,10 @@
 #include <iostream>
+#include <string>
 #include <opencv2/opencv.hpp>
 #include "csv_util/csv_util.h"
 #include "functions.h"
+#include "DA2Network.hpp"
+
 
 int main(const int argc, char* argv[])
 {
@@ -25,12 +28,12 @@ int main(const int argc, char* argv[])
     }
 
     // Map argv[3] to the corresponding processing function
-    std::function<int(cv::Mat&, std::vector<float>&)> processing_func;
+    std::function<int(char*, std::vector<float>&)> processing_func;
     get_feature_function(argv[3], processing_func);
 
     // Use processing_func to calculate features
     std::vector<float> features;
-    processing_func(src, features);
+    processing_func(argv[1], features);
 
     // Map argv[4] to the corresponding distance function
     std::function<float(const std::vector<float>&, const std::vector<float>&, float& distance)> distance_func;

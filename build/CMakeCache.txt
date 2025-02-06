@@ -213,8 +213,23 @@ CMAKE_TAPI:FILEPATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeD
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Value Computed by CMake
+ContentBasedImageRetrieval_BINARY_DIR:STATIC=/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/build
+
+//Value Computed by CMake
+ContentBasedImageRetrieval_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+ContentBasedImageRetrieval_SOURCE_DIR:STATIC=/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval
+
+//The directory containing a CMake configuration file for Eigen3.
+Eigen3_DIR:PATH=/usr/local/share/eigen3/cmake
+
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/local/lib/cmake/opencv4
+
+//The directory containing a CMake configuration file for onnxruntime.
+onnxruntime_DIR:PATH=/usr/local/lib/cmake/onnxruntime
 
 //Value Computed by CMake
 project2_BINARY_DIR:STATIC=/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/build
