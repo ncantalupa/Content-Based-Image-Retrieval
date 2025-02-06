@@ -4,6 +4,7 @@
 #include "csv_util/csv_util.h"
 #include "functions.h"
 #include "DA2Network.hpp"
+#include "faceDetect.h"
 
 
 int main(const int argc, char* argv[])

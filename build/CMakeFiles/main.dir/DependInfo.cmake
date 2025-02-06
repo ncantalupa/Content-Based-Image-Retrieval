@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/csv_util/csv_util.cpp" "CMakeFiles/main.dir/csv_util/csv_util.cpp.o" "gcc" "CMakeFiles/main.dir/csv_util/csv_util.cpp.o.d"
+  "/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/faceDetect.cpp" "CMakeFiles/main.dir/faceDetect.cpp.o" "gcc" "CMakeFiles/main.dir/faceDetect.cpp.o.d"
   "/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/functions.cpp" "CMakeFiles/main.dir/functions.cpp.o" "gcc" "CMakeFiles/main.dir/functions.cpp.o.d"
   "/Users/ncantalupa/Desktop/Github/Content-Based-Image-Retrieval/main.cpp" "CMakeFiles/main.dir/main.cpp.o" "gcc" "CMakeFiles/main.dir/main.cpp.o.d"
   )

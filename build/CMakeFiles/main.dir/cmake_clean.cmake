@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/csv_util/csv_util.cpp.o"
   "CMakeFiles/main.dir/csv_util/csv_util.cpp.o.d"
+  "CMakeFiles/main.dir/faceDetect.cpp.o"
+  "CMakeFiles/main.dir/faceDetect.cpp.o.d"
   "CMakeFiles/main.dir/functions.cpp.o"
   "CMakeFiles/main.dir/functions.cpp.o.d"
   "CMakeFiles/main.dir/main.cpp.o"

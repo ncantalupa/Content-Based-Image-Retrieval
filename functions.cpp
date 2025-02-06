@@ -4,6 +4,7 @@
 #include "csv_util/csv_util.h"
 #include "functions.h"
 #include "DA2Network.hpp"
+#include "faceDetect.h"
 
 int HIST_SIZE = 16; // Don't set too high, and ensure it's used in all histogram functions and distance metrics
 
@@ -353,6 +354,34 @@ int texture_and_color(char* fp, std::vector<float>& features)
     return 0;
 }
 
+int features_faces(char* fp, std::vector<float>& features) 
+{
+    cv::Mat src;
+    get_src(fp, src);
+
+    cv::Mat gray;
+    cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
+    std::vector<cv::Rect> faces;
+    detectFaces(gray, faces);
+    drawBoxes(src, faces, 30, 1.0);
+    features.clear();
+    
+    int MAX_FACES = 5;
+    features.push_back((std::min((int)faces.size(), MAX_FACES))*20);
+
+    for (size_t i = 0; i < MAX_FACES; i++) {
+        if (i < faces.size()) {
+            features.push_back(faces[i].width);
+            features.push_back(faces[i].height);
+        } else {
+            features.push_back(0);
+            features.push_back(0);
+        }
+    }
+    return 0;
+}
+
+
 
 int closest_n_images(const std::vector<float>& features, const std::vector<std::vector<float>>& data,
                      const std::function<float(const std::vector<float>&, const std::vector<float>&, float& distance)>&
@@ -493,7 +522,8 @@ int get_feature_function(const char* function_name, std::function<int(char*, std
         {"multihistogram", multihistogram_hs},
         {"texture_color", texture_and_color}, 
         {"ResNet", features_DNN}, 
-        {"cans", features_can}
+        {"cans", features_can}, 
+        {"faces", features_faces}
     };
     if (const auto iterator = processing_functions.find(function_name); iterator != processing_functions.end())
     {

@@ -169,6 +169,33 @@ csv_util/csv_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/image_proc.dir/build.make CMakeFiles/image_proc.dir/csv_util/csv_util.cpp.s
 .PHONY : csv_util/csv_util.cpp.s
 
+faceDetect.o: faceDetect.cpp.o
+.PHONY : faceDetect.o
+
+# target to build an object file
+faceDetect.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/faceDetect.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/image_proc.dir/build.make CMakeFiles/image_proc.dir/faceDetect.cpp.o
+.PHONY : faceDetect.cpp.o
+
+faceDetect.i: faceDetect.cpp.i
+.PHONY : faceDetect.i
+
+# target to preprocess a source file
+faceDetect.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/faceDetect.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/image_proc.dir/build.make CMakeFiles/image_proc.dir/faceDetect.cpp.i
+.PHONY : faceDetect.cpp.i
+
+faceDetect.s: faceDetect.cpp.s
+.PHONY : faceDetect.s
+
+# target to generate assembly for a file
+faceDetect.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/faceDetect.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/image_proc.dir/build.make CMakeFiles/image_proc.dir/faceDetect.cpp.s
+.PHONY : faceDetect.cpp.s
+
 functions.o: functions.cpp.o
 .PHONY : functions.o
 
@@ -257,6 +284,9 @@ help:
 	@echo "... csv_util/csv_util.o"
 	@echo "... csv_util/csv_util.i"
 	@echo "... csv_util/csv_util.s"
+	@echo "... faceDetect.o"
+	@echo "... faceDetect.i"
+	@echo "... faceDetect.s"
 	@echo "... functions.o"
 	@echo "... functions.i"
 	@echo "... functions.s"
