@@ -64,12 +64,43 @@ int features_can(char* fp, std::vector<float>& features)
     da_net.set_input(src);
     da_net.run_network(depth, src.size());
     
+    int center_i = src.rows/2;
+    int center_j = src.cols/2;
+    int r = 50;
+
+    int B_avg = 0;
+    int G_avg = 0;
+    int R_avg = 0;
+    for (int i = center_i-r; i < center_i+r; i++){
+        for (int j = center_j-r; j < center_j+r; j++){
+            for (int k = 0; k < 3; k++ ){
+                switch (k){
+                    case 0:
+                        B_avg += src.at<cv::Vec3b>(i, j)[k];
+                        break;
+                    case 1:
+                        G_avg += src.at<cv::Vec3b>(i, j)[k];
+                        break;
+                    case 2:
+                        R_avg += src.at<cv::Vec3b>(i, j)[k];
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+        }
+    }
+    B_avg = B_avg/((r*2+1)*(r*2+1));
+    G_avg = G_avg/((r*2+1)*(r*2+1));
+    R_avg = R_avg/((r*2+1)*(r*2+1));
+
     for (int i = 0; i < src.rows; i++){
         for (int j = 0; j < src.cols; j++){
-            if (depth.at<unsigned char>(i, j) > 100 ) {
+            if (depth.at<unsigned char>(i, j) > 120 ) {
 	            dst.at<cv::Vec3b>(i,j) = src.at<cv::Vec3b>(i, j);
 	        }else{
-                dst.at<cv::Vec3b>(i,j) = 0;
+                dst.at<cv::Vec3b>(i,j) = cv::Vec3b(B_avg, G_avg, R_avg);
             }
         }
     }
