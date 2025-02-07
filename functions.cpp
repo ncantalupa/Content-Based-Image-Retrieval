@@ -1,3 +1,30 @@
+/*
+ * Nick Cantalupa and Sean Duffy
+ * 02/07/2025
+ *
+ * Functions for image matching
+ *
+ * Distance metrics (command line arg: function name)
+ * ssd: sum_squared_difference
+ * hist_intersection: histogram_intersection
+ * multihistogram_diff: multihistogram_difference
+ * texture_color_diff: texture_and_color_difference
+ * cosine: cosine_similarity
+ * banana_distance: banana_distance
+ *
+ * Processing functions (command line arg: function name)
+ * baseline: features_7x7
+ * histogram: histogram_hs
+ * multihistogram: multihistogram_hs
+ * texture_color: texture_and_color
+ * ResNet: features_DNN
+ * cans: features_can
+ * faces: features_faces
+ * bananas: bananas
+ *
+ */
+
+
 #include <iostream>
 #include <string>
 #include <opencv2/opencv.hpp>
@@ -8,6 +35,7 @@
 
 int HIST_SIZE = 16; // Don't set too high, and ensure it's used in all histogram functions and distance metrics
 
+// Extract center 7x7 pixels from image as features
 int features_7x7(char* fp, std::vector<float>& features)
 {
     cv::Mat src;
@@ -35,6 +63,7 @@ int features_7x7(char* fp, std::vector<float>& features)
     return 0;
 }
 
+// Extract ResNet embeddings from file as features
 int features_DNN(char* fp, std::vector<float>& features)
 {
     char* resnet_features = new char[strlen("ResNet18_olym.csv") + 1];
@@ -58,6 +87,7 @@ int features_DNN(char* fp, std::vector<float>& features)
     return 0;
 }
 
+// Isolate can and extract histrogam features
 int features_can(char* fp, std::vector<float>& features)
 {
     cv::Mat src;
@@ -129,6 +159,7 @@ int features_can(char* fp, std::vector<float>& features)
     return 0;
 }
 
+// Calculate hue saturation histogram features
 int histogram_hs(char* fp, std::vector<float>& features)
 {
     cv::Mat src;
@@ -170,6 +201,7 @@ int histogram_hs(char* fp, std::vector<float>& features)
     return 0;
 }
 
+// Same histogram_hs for left half of image
 int histogram_hs_left(const cv::Mat& src, std::vector<float>& features)
 {
     // Convert image to HSV
@@ -208,6 +240,7 @@ int histogram_hs_left(const cv::Mat& src, std::vector<float>& features)
     return 0;
 }
 
+// Same as histogram_hs for center half of image
 int histogram_hs_vertical_center(const cv::Mat& src, std::vector<float>& features)
 {
     // Convert image to HSV
@@ -246,6 +279,7 @@ int histogram_hs_vertical_center(const cv::Mat& src, std::vector<float>& feature
     return 0;
 }
 
+// Same as histogram_hs for right half of image
 int histogram_hs_right(const cv::Mat& src, std::vector<float>& features)
 {
     // Convert image to HSV
@@ -284,6 +318,7 @@ int histogram_hs_right(const cv::Mat& src, std::vector<float>& features)
     return 0;
 }
 
+// Combines left, right, and center histograms into one feature vector
 int multihistogram_hs(char* fp, std::vector<float>& features)
 {
     cv::Mat src;
@@ -305,6 +340,7 @@ int multihistogram_hs(char* fp, std::vector<float>& features)
     return 0;
 }
 
+// Calculated gradients magnitudes and creates histogram
 int histogram_texture(const cv::Mat& src, std::vector<float>& features)
 {
     // Filter image
@@ -348,6 +384,7 @@ int histogram_texture(const cv::Mat& src, std::vector<float>& features)
 }
 
 
+// Combines texture and color histograms into one feature vector
 int texture_and_color(char* fp, std::vector<float>& features)
 {
     cv::Mat src;
@@ -397,11 +434,13 @@ int features_faces(char* fp, std::vector<float>& features)
     return 0;
 }
 
+// Extracs yellow spatial variance, yellow percentage, and yellow density near center of yellow mass
 int bananas(char* fp, std::vector<float>& features)
 {
+    // Initialize images
     cv::Mat src;
     get_src(fp, src);
-    cv::Mat original = src.clone();
+    cv::Mat original = src.clone(); // duplicate for visualization during debugging
 
     // Convert image to HSV
     cv::Mat hsv;
@@ -414,13 +453,18 @@ int bananas(char* fp, std::vector<float>& features)
         auto* row = hsv.ptr<cv::Vec3b>(i);
         for (int j = 0; j < hsv.cols; j++)
         {
+            // Set HSV thresholds for yellow
             constexpr int s_lower = 250;
             constexpr int v_lower = 180;
             constexpr int yellow_hue_higher = 35;
             constexpr int yellow_hue_lower = 25;
+
+            // Get HSV values
             const int h = row[j][0];
             const int s = row[j][1];
             const int v = row[j][2];
+
+            // Check if pixel is yellow and add to vector
             if (yellow_hue_lower < h && h < yellow_hue_higher && s > s_lower && v > v_lower)
             {
                 yellow_pixels.emplace_back(j, i);
@@ -436,15 +480,17 @@ int bananas(char* fp, std::vector<float>& features)
         }
     }
 
-    // Calculate spatial variance of yellow pixels
+    // Calculations on yellow pixels
     if (!yellow_pixels.empty())
     {
+        // Get standard deviation of yellow pixels in x and y directions and add to feature vector
         cv::Scalar mean, stddev;
         cv::meanStdDev(yellow_pixels, mean, stddev);
         const float normalized_stddev_x = static_cast<float>(stddev[0]) / hsv.rows;
         const float normalized_stddev_y = static_cast<float>(stddev[1]) / hsv.cols;
         features.push_back(normalized_stddev_x);
         features.push_back(normalized_stddev_y);
+        // Calculate percentage of yellow pixels and add to feature vector
         float yellow_percentage = static_cast<float>(yellow_pixels.size()) / (hsv.rows * hsv.cols);
         features.push_back(yellow_percentage);
 
@@ -452,6 +498,7 @@ int bananas(char* fp, std::vector<float>& features)
         int x_limit = hsv.cols / 4;
         int y_limit = hsv.rows / 4;
         int count_near_center = 0;
+        // Iterate through yellow pixels and increment count if within x and y limits of center
         for (const auto& point : yellow_pixels)
         {
             if (std::abs(point.x - mean[0]) < x_limit && std::abs(point.y - mean[1]) < y_limit)
@@ -459,11 +506,13 @@ int bananas(char* fp, std::vector<float>& features)
                 count_near_center++;
             }
         }
+        // Calculate density and add to feature vector
         float density_near_center = static_cast<float>(count_near_center) / (x_limit * y_limit);
         features.push_back(density_near_center);
     }
     else
     {
+        // Default values to add if no yellow pixels are present
         features.push_back(1);
         features.push_back(1);
         features.push_back(0);
@@ -505,6 +554,7 @@ int closest_n_images(const std::vector<float>& features, const std::vector<std::
     return 0;
 }
 
+// Get sum of squared differences between two feature vectors
 int sum_squared_difference(const std::vector<float>& features1, const std::vector<float>& features2, float& distance)
 {
     float sum = 0;
@@ -516,6 +566,7 @@ int sum_squared_difference(const std::vector<float>& features1, const std::vecto
     return 0;
 }
 
+// Get sum of absolute differences between two feature vectors
 int sum_absolute_difference(const std::vector<float>& features1, const std::vector<float>& features2, float& distance)
 {
     float sum = 0;
@@ -527,6 +578,7 @@ int sum_absolute_difference(const std::vector<float>& features1, const std::vect
     return 0;
 }
 
+// Get cosine similarity between two feature vectors
 int cosine_similarity(const std::vector<float>& features1, const std::vector<float>& features2, float& distance)
 {
     float dot_product = 0;
@@ -544,6 +596,7 @@ int cosine_similarity(const std::vector<float>& features1, const std::vector<flo
     return 0;
 }
 
+// Get histogram intersection between two feature vectors
 int histogram_intersection(const std::vector<float>& features1, const std::vector<float>& features2, float& distance)
 {
     float sum = 0;
@@ -558,6 +611,7 @@ int histogram_intersection(const std::vector<float>& features1, const std::vecto
     return 0;
 }
 
+// Get multihistogram difference between two feature vectors
 int multihistogram_difference(const std::vector<float>& features1, const std::vector<float>& features2, float& distance)
 {
     // Split features into left, right, and center histogram features
@@ -569,7 +623,7 @@ int multihistogram_difference(const std::vector<float>& features1, const std::ve
     const std::vector<float> right2(features2.begin() + n_per_histogram, features2.begin() + 2 * n_per_histogram);
     const std::vector<float> center2(features2.begin() + 2 * n_per_histogram, features2.end());
 
-    // Calculate distances between the three histograms
+    // Calculate sum absolute difference distances between the three histograms
     float left_distance;
     float right_distance;
     float center_distance;
@@ -577,12 +631,13 @@ int multihistogram_difference(const std::vector<float>& features1, const std::ve
     sum_absolute_difference(right1, right2, right_distance);
     sum_absolute_difference(center1, center2, center_distance);
 
-    // Combine distance metrics
+    // Combine distance metrics with weightings
     distance = 0.15f * left_distance + 0.15f * right_distance + 0.7f * center_distance;
 
     return 0;
 }
 
+// Get texture and color difference between two feature vectors
 int texture_and_color_difference(const std::vector<float>& features1, const std::vector<float>& features2,
                                  float& distance)
 {
@@ -599,30 +654,32 @@ int texture_and_color_difference(const std::vector<float>& features1, const std:
     histogram_intersection(texture1, texture2, texture_distance);
     histogram_intersection(color1, color2, color_distance);
 
-    // Combine distance metrics
+    // Combine distance metrics with weightings
     distance = 0.5f * texture_distance + 0.5f * color_distance;
 
     return 0;
 }
 
+// Get banana distance between two feature vectors (SSD of spatial variance, percent yellow, and yellow density)
 int banana_distance(const std::vector<float>& features1, const std::vector<float>& features2, float& distance)
 {
-    // Calculate SSD for the first two features
+    // Calculate SSD for the spatial variances
     float ssd_spatial_variance = (features1[0] - features2[0]) * (features1[0] - features2[0]) +
         (features1[1] - features2[1]) * (features1[1] - features2[1]);
 
-    // Calculate SSD for the third feature
+    // Calculate SSD for the percent yellow
     float ssd_percent_yellow = (features1[2] - features2[2]) * (features1[2] - features2[2]);
 
+    // Calculate SSD for the yellow density
     float ssd_yellow_density = (features1[3] - features2[3]) * (features1[3] - features2[3]);
 
-    // Combine the two SSDs with equal weighting
+    // Combine the SSDs with weighting
     distance = 0.50f * ssd_spatial_variance; //+ 0.25f * ssd_yellow_density + 0.25f * ssd_percent_yellow;
 
     return 0;
 }
 
-
+// Given a command line argument return the corresponding image featurization function
 int get_feature_function(const char* function_name, std::function<int(char*, std::vector<float>&)>& processing_func)
 {
     std::map<std::string, std::function<int(char*, std::vector<float>&)>> processing_functions = {
@@ -648,6 +705,7 @@ int get_feature_function(const char* function_name, std::function<int(char*, std
     return 0;
 }
 
+// Given a command line argument return the corresponding distance metric function
 int get_distance_function(const char* function_name,
                           std::function<float(const std::vector<float>&, const std::vector<float>&, float& distance)>&
                           distance_func)
@@ -838,6 +896,7 @@ int magnitude(const cv::Mat& sx, cv::Mat& sy, cv::Mat& dst)
     return 0;
 }
 
+// Gets image from file path
 int get_src(const char* fp, cv::Mat& src)
 {
     src = cv::imread(fp);

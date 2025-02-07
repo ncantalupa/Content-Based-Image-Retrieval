@@ -1,3 +1,10 @@
+/*
+ * Nick Cantalupa and Sean Duffy
+ * 02/07/2025
+ *
+ * Functions for image matching
+ */
+
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 

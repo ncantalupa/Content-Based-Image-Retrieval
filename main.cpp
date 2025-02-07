@@ -1,3 +1,10 @@
+/*
+* Nick Cantalupa and Sean Duffy
+* 02/07/2025
+*
+* Processing a given image and matching it to images given in a CSV of features
+*/
+
 #include <iostream>
 #include <string>
 #include <opencv2/opencv.hpp>

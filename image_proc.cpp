@@ -1,3 +1,10 @@
+/*
+* Nick Cantalupa and Sean Duffy
+* 02/07/2025
+*
+* Processing all images and writing features to a csv file
+*/
+
 #include <iostream>
 #include <string>
 #include <filesystem>
