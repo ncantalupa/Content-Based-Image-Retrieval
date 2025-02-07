@@ -9,9 +9,9 @@ VS Code on Mac with CMake was used to compile this code. The CMakeLists.txt file
 
 Arguements for the files are as follows:
 
-./main <target image file> <features csv file> <feature processing function> <distance metric> <number of similar images> 
+./main (target image file) (features csv file) (feature processing function) (distance metric) (number of similar images)
 
-./image_proc <images folder> <feature extraction method> <features csv file>
+./image_proc (images folder) (feature extraction method) (features csv file)
 
 Extension feature extractions are for arguements 'faces' and 'bananas'
 
@@ -37,7 +37,7 @@ find_package(Eigen3 REQUIRED)
 find_package(onnxruntime REQUIRED)  
 include_directories(${OpenCV_INCLUDE_DIRS})  
 include_directories(${EIGEN3_INCLUDE_DIR})  
-include_directories(<dir_containing_onnxruntime>/onnxruntime)
-link_directories(<dir_containing_onnxruntime>/onnxruntime/1.20.1_2/lib)
-target_link_libraries(main ${OpenCV_LIBS} Eigen3::Eigen <dir_containing_onnxruntime>/onnxruntime/1.20.1_2/lib/libonnxruntime.1.20.1.dylib)
-target_link_libraries(image_proc ${OpenCV_LIBS} Eigen3::Eigen <dir_containing_onnxruntime>/onnxruntime/1.20.1_2/lib/libonnxruntime.1.20.1.dylib)
+include_directories((dir_containing_onnxruntime)/onnxruntime)
+link_directories((dir_containing_onnxruntime)/onnxruntime/1.20.1_2/lib)
+target_link_libraries(main ${OpenCV_LIBS} Eigen3::Eigen (dir_containing_onnxruntime)/onnxruntime/1.20.1_2/lib/libonnxruntime.1.20.1.dylib)
+target_link_libraries(image_proc ${OpenCV_LIBS} Eigen3::Eigen (dir_containing_onnxruntime)/onnxruntime/1.20.1_2/lib/libonnxruntime.1.20.1.dylib)
