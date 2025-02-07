@@ -38,18 +38,19 @@ int HIST_SIZE = 16; // Don't set too high, and ensure it's used in all histogram
 // Extract center 7x7 pixels from image as features
 int features_7x7(char* fp, std::vector<float>& features)
 {
+    // Retrieve image
     cv::Mat src;
     get_src(fp, src);
 
+    // Find center of the image
     const int rows_center = src.rows / 2;
     const int cols_center = src.cols / 2;
-
     const int rows_start = rows_center - 3;
     const int cols_start = cols_center - 3;
-
     const int rows_end = rows_center + 3;
     const int cols_end = cols_center + 3;
 
+    // Add features from center kernel
     for (int i = rows_start; i < rows_end; i++)
     {
         for (int j = cols_start; j < cols_end; j++)
@@ -66,13 +67,14 @@ int features_7x7(char* fp, std::vector<float>& features)
 // Extract ResNet embeddings from file as features
 int features_DNN(char* fp, std::vector<float>& features)
 {
+    // Read in ResNet embdeddings
     char* resnet_features = new char[strlen("ResNet18_olym.csv") + 1];
     strcpy(resnet_features, "../features/ResNet18_olym.csv");
     std::vector<char*> filenames;
     std::vector<std::vector<float>> data;
     read_image_data_csv(resnet_features, filenames, data, 0);
 
-    // Set features to be row from data with name target
+    // Get features from target row
     for (int i = 0; i < filenames.size(); i++)
     {
         if (strcmp(filenames[i], fp) == 0)
@@ -95,14 +97,17 @@ int features_can(char* fp, std::vector<float>& features)
     cv::Mat depth = cv::Mat::zeros(src.size(), CV_8UC3);
     cv::Mat dst = cv::Mat::zeros(src.size(), CV_8UC3);
 
+    // Run DA network on can image
     DA2Network da_net("model_fp16.onnx");
     da_net.set_input(src);
     da_net.run_network(depth, src.size());
 
+    // Get center of the image
     int center_i = src.rows / 2;
     int center_j = src.cols / 2;
     int r = 50;
 
+    // Find the average pixel values of the center of the image
     int B_avg = 0;
     int G_avg = 0;
     int R_avg = 0;
@@ -133,6 +138,7 @@ int features_can(char* fp, std::vector<float>& features)
     G_avg = G_avg / ((r * 2 + 1) * (r * 2 + 1));
     R_avg = R_avg / ((r * 2 + 1) * (r * 2 + 1));
 
+    // Isolate the foreground pixels, replace the background with avg color calculated above
     for (int i = 0; i < src.rows; i++)
     {
         for (int j = 0; j < src.cols; j++)
@@ -147,11 +153,8 @@ int features_can(char* fp, std::vector<float>& features)
             }
         }
     }
-    // cv::imshow("src", src);
-    // cv::imshow("depth", depth);
-    // cv::imshow("dst", dst);
-    // cv::waitKey(0);
 
+    // Feed new image into Histogram function
     char* out_fp = new char[strlen("DA2.jpg") + 1];
     strcpy(out_fp, "DA2.jpg");
     cv::imwrite(out_fp, dst);
@@ -403,21 +406,25 @@ int texture_and_color(char* fp, std::vector<float>& features)
     return 0;
 }
 
+// Extracts number and size of faces in the image, creates feature vector
 int features_faces(char* fp, std::vector<float>& features)
 {
+    // Get image
     cv::Mat src;
     get_src(fp, src);
 
+    // Identify faces in image
     cv::Mat gray;
     cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
     std::vector<cv::Rect> faces;
     detectFaces(gray, faces);
     drawBoxes(src, faces, 30, 1.0);
     features.clear();
-
+    // Get number of faces
     int MAX_FACES = 5;
     features.push_back((std::min((int)faces.size(), MAX_FACES)) * 20);
 
+    // Add Face box size to featrues for each face
     for (size_t i = 0; i < MAX_FACES; i++)
     {
         if (i < faces.size())
@@ -522,12 +529,13 @@ int bananas(char* fp, std::vector<float>& features)
     return 0;
 }
 
-
+// Get the closest n images for the given distance function and target file
 int closest_n_images(const std::vector<float>& features, const std::vector<std::vector<float>>& data,
                      const std::function<float(const std::vector<float>&, const std::vector<float>&, float& distance)>&
                      distance_function,
                      const std::vector<char*>& filenames, const int n, std::vector<char*>& topN)
 {
+    // Get distance function
     std::vector<float> ssd;
     for (const auto& i : data)
     {
@@ -535,7 +543,7 @@ int closest_n_images(const std::vector<float>& features, const std::vector<std::
         distance_function(features, i, distance);
         ssd.push_back(distance);
     }
-
+    // Find nearest images, add them to vector
     for (int i = 0; i < n; i++)
     {
         int min_index = 0;
