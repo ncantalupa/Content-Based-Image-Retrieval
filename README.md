@@ -1,6 +1,14 @@
 # Content-Based-Image-Retrieval
 Project for CS5330 Computer Vision and Content Recognition
 
+Group Members: Nick Cantalupa and Sean Duffy
+
+No necessary links or videos, github: https://github.com/ncantalupa/Content-Based-Image-Retrieval
+
+VS Code on Mac with CMake was used to compile this code. The CMakeLists.txt file is listed below
+
+_We are using 1 of Sean Duffy's time travel days to submit the project one day after the due date._
+
 ### CMakeLists.txt
 cmake_minimum_required(VERSION 3.10)  
 project(project2)
