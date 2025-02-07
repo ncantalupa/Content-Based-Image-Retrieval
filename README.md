@@ -5,7 +5,15 @@ Group Members: Nick Cantalupa and Sean Duffy
 
 No necessary links or videos, github: https://github.com/ncantalupa/Content-Based-Image-Retrieval
 
-VS Code on Mac with CMake was used to compile this code. The CMakeLists.txt file is listed below
+VS Code on Mac with CMake was used to compile this code. The CMakeLists.txt file is listed below. 
+
+Arguements for the files are as follows:
+
+./main <target image file> <features csv file> <feature processing function> <distance metric> <number of similar images> 
+
+./image_proc <images folder> <feature extraction method> <features csv file>
+
+Extension feature extractions are for arguements 'faces' and 'bananas'
 
 _We are using 1 of Sean Duffy's time travel days to submit the project one day after the due date._
 
