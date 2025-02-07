@@ -35,17 +35,21 @@ int features_7x7(char* fp, std::vector<float>& features)
     return 0;
 }
 
-int features_DNN(char* fp, std::vector<float>& features) {
+int features_DNN(char* fp, std::vector<float>& features)
+{
     char* resnet_features = new char[strlen("ResNet18_olym.csv") + 1];
     strcpy(resnet_features, "../features/ResNet18_olym.csv");
-    std::vector<char *> filenames;
+    std::vector<char*> filenames;
     std::vector<std::vector<float>> data;
     read_image_data_csv(resnet_features, filenames, data, 0);
 
     // Set features to be row from data with name target
-    for(int i = 0; i < filenames.size(); i++) {
-        if(strcmp(filenames[i], fp) == 0) {
-            for (int j = 0; j < data[i].size(); j++) {
+    for (int i = 0; i < filenames.size(); i++)
+    {
+        if (strcmp(filenames[i], fp) == 0)
+        {
+            for (int j = 0; j < data[i].size(); j++)
+            {
                 features.push_back(data[i][j]);
             }
             break;
@@ -64,44 +68,52 @@ int features_can(char* fp, std::vector<float>& features)
     DA2Network da_net("model_fp16.onnx");
     da_net.set_input(src);
     da_net.run_network(depth, src.size());
-    
-    int center_i = src.rows/2;
-    int center_j = src.cols/2;
+
+    int center_i = src.rows / 2;
+    int center_j = src.cols / 2;
     int r = 50;
 
     int B_avg = 0;
     int G_avg = 0;
     int R_avg = 0;
-    for (int i = center_i-r; i < center_i+r; i++){
-        for (int j = center_j-r; j < center_j+r; j++){
-            for (int k = 0; k < 3; k++ ){
-                switch (k){
-                    case 0:
-                        B_avg += src.at<cv::Vec3b>(i, j)[k];
-                        break;
-                    case 1:
-                        G_avg += src.at<cv::Vec3b>(i, j)[k];
-                        break;
-                    case 2:
-                        R_avg += src.at<cv::Vec3b>(i, j)[k];
-                        break;
-                    default:
-                        break;
-
+    for (int i = center_i - r; i < center_i + r; i++)
+    {
+        for (int j = center_j - r; j < center_j + r; j++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                switch (k)
+                {
+                case 0:
+                    B_avg += src.at<cv::Vec3b>(i, j)[k];
+                    break;
+                case 1:
+                    G_avg += src.at<cv::Vec3b>(i, j)[k];
+                    break;
+                case 2:
+                    R_avg += src.at<cv::Vec3b>(i, j)[k];
+                    break;
+                default:
+                    break;
                 }
             }
         }
     }
-    B_avg = B_avg/((r*2+1)*(r*2+1));
-    G_avg = G_avg/((r*2+1)*(r*2+1));
-    R_avg = R_avg/((r*2+1)*(r*2+1));
+    B_avg = B_avg / ((r * 2 + 1) * (r * 2 + 1));
+    G_avg = G_avg / ((r * 2 + 1) * (r * 2 + 1));
+    R_avg = R_avg / ((r * 2 + 1) * (r * 2 + 1));
 
-    for (int i = 0; i < src.rows; i++){
-        for (int j = 0; j < src.cols; j++){
-            if (depth.at<unsigned char>(i, j) > 120 ) {
-	            dst.at<cv::Vec3b>(i,j) = src.at<cv::Vec3b>(i, j);
-	        }else{
-                dst.at<cv::Vec3b>(i,j) = cv::Vec3b(B_avg, G_avg, R_avg);
+    for (int i = 0; i < src.rows; i++)
+    {
+        for (int j = 0; j < src.cols; j++)
+        {
+            if (depth.at<unsigned char>(i, j) > 120)
+            {
+                dst.at<cv::Vec3b>(i, j) = src.at<cv::Vec3b>(i, j);
+            }
+            else
+            {
+                dst.at<cv::Vec3b>(i, j) = cv::Vec3b(B_avg, G_avg, R_avg);
             }
         }
     }
@@ -276,7 +288,7 @@ int multihistogram_hs(char* fp, std::vector<float>& features)
 {
     cv::Mat src;
     get_src(fp, src);
-    
+
     // Calculate HS histograms for the left half, right half, and vertical center half of the image
     std::vector<float> left_features;
     std::vector<float> right_features;
@@ -354,7 +366,7 @@ int texture_and_color(char* fp, std::vector<float>& features)
     return 0;
 }
 
-int features_faces(char* fp, std::vector<float>& features) 
+int features_faces(char* fp, std::vector<float>& features)
 {
     cv::Mat src;
     get_src(fp, src);
@@ -365,15 +377,19 @@ int features_faces(char* fp, std::vector<float>& features)
     detectFaces(gray, faces);
     drawBoxes(src, faces, 30, 1.0);
     features.clear();
-    
-    int MAX_FACES = 5;
-    features.push_back((std::min((int)faces.size(), MAX_FACES))*20);
 
-    for (size_t i = 0; i < MAX_FACES; i++) {
-        if (i < faces.size()) {
+    int MAX_FACES = 5;
+    features.push_back((std::min((int)faces.size(), MAX_FACES)) * 20);
+
+    for (size_t i = 0; i < MAX_FACES; i++)
+    {
+        if (i < faces.size())
+        {
             features.push_back(faces[i].width);
             features.push_back(faces[i].height);
-        } else {
+        }
+        else
+        {
             features.push_back(0);
             features.push_back(0);
         }
@@ -381,6 +397,81 @@ int features_faces(char* fp, std::vector<float>& features)
     return 0;
 }
 
+int bananas(char* fp, std::vector<float>& features)
+{
+    cv::Mat src;
+    get_src(fp, src);
+    cv::Mat original = src.clone();
+
+    // Convert image to HSV
+    cv::Mat hsv;
+    cv::cvtColor(src, hsv, cv::COLOR_BGR2HSV);
+
+    // Calculate histogram for HS components
+    std::vector<cv::Point> yellow_pixels;
+    for (int i = 0; i < hsv.rows; i++)
+    {
+        auto* row = hsv.ptr<cv::Vec3b>(i);
+        for (int j = 0; j < hsv.cols; j++)
+        {
+            constexpr int s_lower = 250;
+            constexpr int v_lower = 180;
+            constexpr int yellow_hue_higher = 35;
+            constexpr int yellow_hue_lower = 25;
+            const int h = row[j][0];
+            const int s = row[j][1];
+            const int v = row[j][2];
+            if (yellow_hue_lower < h && h < yellow_hue_higher && s > s_lower && v > v_lower)
+            {
+                yellow_pixels.emplace_back(j, i);
+            }
+
+            else
+            {
+                // Setting non-yellow pixels to black (use for debugging: set breakpoint after for loops
+                src.at<cv::Vec3b>(i, j)[0] = 0;
+                src.at<cv::Vec3b>(i, j)[1] = 0;
+                src.at<cv::Vec3b>(i, j)[2] = 0;
+            }
+        }
+    }
+
+    // Calculate spatial variance of yellow pixels
+    if (!yellow_pixels.empty())
+    {
+        cv::Scalar mean, stddev;
+        cv::meanStdDev(yellow_pixels, mean, stddev);
+        const float normalized_stddev_x = static_cast<float>(stddev[0]) / hsv.rows;
+        const float normalized_stddev_y = static_cast<float>(stddev[1]) / hsv.cols;
+        features.push_back(normalized_stddev_x);
+        features.push_back(normalized_stddev_y);
+        float yellow_percentage = static_cast<float>(yellow_pixels.size()) / (hsv.rows * hsv.cols);
+        features.push_back(yellow_percentage);
+
+        // Calculate density of yellow pixels near the center
+        int x_limit = hsv.cols / 4;
+        int y_limit = hsv.rows / 4;
+        int count_near_center = 0;
+        for (const auto& point : yellow_pixels)
+        {
+            if (std::abs(point.x - mean[0]) < x_limit && std::abs(point.y - mean[1]) < y_limit)
+            {
+                count_near_center++;
+            }
+        }
+        float density_near_center = static_cast<float>(count_near_center) / (x_limit * y_limit);
+        features.push_back(density_near_center);
+    }
+    else
+    {
+        features.push_back(1);
+        features.push_back(1);
+        features.push_back(0);
+        features.push_back(0);
+    }
+
+    return 0;
+}
 
 
 int closest_n_images(const std::vector<float>& features, const std::vector<std::vector<float>>& data,
@@ -436,11 +527,13 @@ int sum_absolute_difference(const std::vector<float>& features1, const std::vect
     return 0;
 }
 
-int cosine_similarity(const std::vector<float>& features1, const std::vector<float>& features2, float& distance) {
+int cosine_similarity(const std::vector<float>& features1, const std::vector<float>& features2, float& distance)
+{
     float dot_product = 0;
     float norm1 = 0;
     float norm2 = 0;
-    for (int i = 0; i < features1.size(); i++) {
+    for (int i = 0; i < features1.size(); i++)
+    {
         dot_product += features1[i] * features2[i];
         norm1 += features1[i] * features1[i];
         norm2 += features2[i] * features2[i];
@@ -512,6 +605,23 @@ int texture_and_color_difference(const std::vector<float>& features1, const std:
     return 0;
 }
 
+int banana_distance(const std::vector<float>& features1, const std::vector<float>& features2, float& distance)
+{
+    // Calculate SSD for the first two features
+    float ssd_spatial_variance = (features1[0] - features2[0]) * (features1[0] - features2[0]) +
+        (features1[1] - features2[1]) * (features1[1] - features2[1]);
+
+    // Calculate SSD for the third feature
+    float ssd_percent_yellow = (features1[2] - features2[2]) * (features1[2] - features2[2]);
+
+    float ssd_yellow_density = (features1[3] - features2[3]) * (features1[3] - features2[3]);
+
+    // Combine the two SSDs with equal weighting
+    distance = 0.50f * ssd_spatial_variance; //+ 0.25f * ssd_yellow_density + 0.25f * ssd_percent_yellow;
+
+    return 0;
+}
+
 
 int get_feature_function(const char* function_name, std::function<int(char*, std::vector<float>&)>& processing_func)
 {
@@ -520,10 +630,11 @@ int get_feature_function(const char* function_name, std::function<int(char*, std
         {"baseline", features_7x7},
         {"histogram", histogram_hs},
         {"multihistogram", multihistogram_hs},
-        {"texture_color", texture_and_color}, 
-        {"ResNet", features_DNN}, 
-        {"cans", features_can}, 
-        {"faces", features_faces}
+        {"texture_color", texture_and_color},
+        {"ResNet", features_DNN},
+        {"cans", features_can},
+        {"faces", features_faces},
+        {"bananas", bananas}
     };
     if (const auto iterator = processing_functions.find(function_name); iterator != processing_functions.end())
     {
@@ -547,8 +658,9 @@ int get_distance_function(const char* function_name,
             {"ssd", sum_squared_difference},
             {"hist_intersection", histogram_intersection},
             {"multihistogram_diff", multihistogram_difference},
-            {"texture_color_diff", texture_and_color_difference}, 
-            {"cosine", cosine_similarity}
+            {"texture_color_diff", texture_and_color_difference},
+            {"cosine", cosine_similarity},
+            {"banana_distance", banana_distance}
         };
     if (const auto iterator = processing_functions.find(function_name); iterator != processing_functions.end())
     {
@@ -726,9 +838,11 @@ int magnitude(const cv::Mat& sx, cv::Mat& sy, cv::Mat& dst)
     return 0;
 }
 
-int get_src(const char* fp, cv::Mat& src) {
+int get_src(const char* fp, cv::Mat& src)
+{
     src = cv::imread(fp);
-    if(src.empty()) {
+    if (src.empty())
+    {
         std::cerr << "Unable to open image: " << fp << std::endl;
         return -1;
     }

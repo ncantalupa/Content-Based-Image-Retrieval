@@ -26,6 +26,8 @@ int histogram_hs_vertical_center(const cv::Mat& src, std::vector<float>& feature
 int multihistogram_hs(char* fp, std::vector<float>& features);
 int histogram_texture(const cv::Mat& src, std::vector<float>& features);
 int texture_and_color(char* fp, std::vector<float>& features);
+int features_faces(char* fp, std::vector<float>& features);
+int bananas(char* fp, std::vector<float>& features);
 
 // Distance metrics
 int sum_squared_difference(const std::vector<float>& features1, const std::vector<float>& features2, float& distance);
@@ -36,6 +38,7 @@ int multihistogram_difference(const std::vector<float>& features1, const std::ve
 int texture_and_color_difference(const std::vector<float>& features1, const std::vector<float>& features2,
                                  float& distance);
 int cosine_similarity(const std::vector<float>& features1, const std::vector<float>& features2, float& distance);
+int banana_distance(const std::vector<float>& features1, const std::vector<float>& features2, float& distance);
 
 // Image comparison
 int closest_n_images(const std::vector<float>& features, const std::vector<std::vector<float>>& data,
